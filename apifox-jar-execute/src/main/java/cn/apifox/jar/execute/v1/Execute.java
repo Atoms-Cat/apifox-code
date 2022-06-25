@@ -1,23 +1,18 @@
-package cn.apifox.jar.execute;
+package cn.apifox.jar.execute.v1;
 
 import com.alibaba.fastjson.JSONObject;
-import org.reflections.Reflections;
-import org.reflections.scanners.Scanners;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.io.File;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static org.reflections.scanners.Scanners.SubTypes;
+import java.util.stream.Collectors;
 
 /**
  * @author th158
@@ -73,53 +68,24 @@ public class Execute {
                 URL url = jarFile.toURI().toURL();
                 // 加载jar的类
                 ClassLoader classLoader = new URLClassLoader(new URL[]{url});
-                String path = classPath.substring(0, classPath.lastIndexOf("."));
-                Reflections reflections = new Reflections(
-                        new ConfigurationBuilder()
-                                .forPackage(path, classLoader)
-                );
                 // 查询指定的类
                 Class<?> loadClass = classLoader.loadClass(classPath);
-                Set<Class<?>> modules = reflections.get(SubTypes.of().asClass());
-
-                System.out.println(JSONObject.toJSONString(modules));
-
                 // 实例化指定的类
                 Object instance = loadClass.getDeclaredConstructor().newInstance();
                 // 查询指定的类中的方法
-                Method method = null;
-                for (Method methodItem : loadClass.getDeclaredMethods()) {
-                    if (methodName.equals(methodItem.getName())) {
-                        if (methodItem.getParameterCount() == args.length) {
-                            method = methodItem;
-                        }
-                    }
-                }
-                for (Method methodItem : loadClass.getMethods()) {
-                    if (methodName.equals(methodItem.getName())) {
-                        if (methodItem.getParameterCount() == args.length) {
-                            method = methodItem;
-                        }
-                    }
-                }
-                if (method == null) {
+                Set<Method> methodSet = new HashSet<>();
+                getMethod(methodSet, loadClass, methodName, args);
+                List<Method> methodList = new ArrayList<>(methodSet);
+                if (methodList.size() == 0) {
                     return methodName + "方法不存在";
                 }
+                // 转换参数
+                List<Object> methodParam = new ArrayList<>();
+                Method method = getMethodParam(methodParam, methodList, args);
                 // 执行类中的方法
                 Object resp;
                 if (args.length > 0) {
-                    // 转换参数
-                    List<Object> argList = new ArrayList<>();
-                    try {
-                        Class<?>[] classes = method.getParameterTypes();
-                        for (int i = 0; i < classes.length; i++) {
-                            argList.add(JSONObject.parseObject(args[i], classes[i]));
-                        }
-                    } catch (Exception e) {
-                        System.out.println(JSONObject.toJSONString(e));
-                        return methodName + "的参数类型正确";
-                    }
-                    resp = method.invoke(instance, argList.toArray(new Object[0]));
+                    resp = method.invoke(instance, methodParam.toArray(new Object[0]));
                 } else {
                     resp = method.invoke(instance);
                 }
@@ -142,10 +108,74 @@ public class Execute {
             } catch (NoSuchMethodException e) {
                 System.out.println(JSONObject.toJSONString(e));
                 return classPath + "类NoSuchMethod异常";
+            } catch (IllegalArgumentException e) {
+                System.out.println(JSONObject.toJSONString(e));
+                return methodName + "参数匹配异常";
+            } catch (NullPointerException e) {
+                System.out.println(JSONObject.toJSONString(e));
+                return methodName + "方法匹配异常";
             }
         } else {
             return jarPath + "文件不存在";
         }
+    }
+
+    /**
+     * 匹配对应参数个数、方法名称相同的方法对象
+     * @param methodList
+     * @param loadClass
+     * @param methodName
+     * @param args
+     */
+    public static void getMethod(Set<Method> methodList, Class<?> loadClass, String methodName, String[] args) {
+        for (Method methodItem : loadClass.getDeclaredMethods()) {
+            if (methodName.equals(methodItem.getName())) {
+                if (methodItem.getParameterCount() == args.length) {
+                    methodList.add(methodItem);
+                }
+            }
+        }
+        for (Method methodItem : loadClass.getMethods()) {
+            if (methodName.equals(methodItem.getName())) {
+                if (methodItem.getParameterCount() == args.length) {
+                    methodList.add(methodItem);
+                }
+            }
+        }
+    }
+
+    public static Method getMethodParam(List<Object> methodParam, List<Method> methodList, String[] args) {
+        Method method = null;
+        for (Method item : methodList) {
+            Boolean correct = true;
+            Class<?>[] classes = item.getParameterTypes();
+            for (int i = 0; i < classes.length; i++) {
+                try {
+                    if (args[i].contains("class")) {
+                        if (JSONObject.parseObject(args[i]).getString("class").equals(classes[i].getName())) {
+                            methodParam.add(JSONObject.parseObject(args[i], classes[i]));
+                        } else {
+                            correct = false;
+                        }
+                    } else {
+                        methodParam.add(JSONObject.parseObject(args[i], classes[i]));
+                    }
+                } catch (Exception e) {
+                    if (!args[i].getClass().equals(classes[i])) {
+                        correct = false;
+                    } else {
+                        methodParam.add(args[i]);
+                    }
+                }
+            }
+            if (correct) {
+                method = item;
+                break;
+            } else {
+                methodParam.clear();
+            }
+        }
+        return method;
     }
 
     public static String getResp(Object resp) {
