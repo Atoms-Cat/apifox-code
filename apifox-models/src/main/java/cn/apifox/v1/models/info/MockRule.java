@@ -7,6 +7,9 @@ import java.util.List;
  */
 public class MockRule {
 
+    /**
+     * todo
+     */
     private List<String> rules;
 
     private Boolean enableSystemRule;

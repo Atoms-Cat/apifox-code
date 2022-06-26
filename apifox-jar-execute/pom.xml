@@ -61,7 +61,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cn.apifox.jar.execute.Execute</mainClass>
+                            <mainClass>cn.apifox.jar.execute.v2.Execute</mainClass>
                         </manifest>
                     </archive>
                     <classesDirectory>

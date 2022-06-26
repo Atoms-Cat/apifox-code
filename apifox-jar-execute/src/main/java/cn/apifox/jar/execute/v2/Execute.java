@@ -1,4 +1,4 @@
-package cn.apifox.jar.execute;
+package cn.apifox.jar.execute.v2;
 
 import com.alibaba.fastjson.JSONObject;
 import org.reflections.Reflections;
@@ -84,64 +84,13 @@ public class Execute {
 
                 System.out.println(JSONObject.toJSONString(modules));
 
-                // 实例化指定的类
-                Object instance = loadClass.getDeclaredConstructor().newInstance();
-                // 查询指定的类中的方法
-                Method method = null;
-                for (Method methodItem : loadClass.getDeclaredMethods()) {
-                    if (methodName.equals(methodItem.getName())) {
-                        if (methodItem.getParameterCount() == args.length) {
-                            method = methodItem;
-                        }
-                    }
-                }
-                for (Method methodItem : loadClass.getMethods()) {
-                    if (methodName.equals(methodItem.getName())) {
-                        if (methodItem.getParameterCount() == args.length) {
-                            method = methodItem;
-                        }
-                    }
-                }
-                if (method == null) {
-                    return methodName + "方法不存在";
-                }
-                // 执行类中的方法
-                Object resp;
-                if (args.length > 0) {
-                    // 转换参数
-                    List<Object> argList = new ArrayList<>();
-                    try {
-                        Class<?>[] classes = method.getParameterTypes();
-                        for (int i = 0; i < classes.length; i++) {
-                            argList.add(JSONObject.parseObject(args[i], classes[i]));
-                        }
-                    } catch (Exception e) {
-                        System.out.println(JSONObject.toJSONString(e));
-                        return methodName + "的参数类型正确";
-                    }
-                    resp = method.invoke(instance, argList.toArray(new Object[0]));
-                } else {
-                    resp = method.invoke(instance);
-                }
-                return resp;
+                return null;
             } catch (MalformedURLException e) {
                 System.out.println(JSONObject.toJSONString(e));
                 return jarPath + "文件路径异常";
             } catch (ClassNotFoundException e) {
                 System.out.println(JSONObject.toJSONString(e));
                 return classPath + "类不存在";
-            } catch (InvocationTargetException e) {
-                System.out.println(JSONObject.toJSONString(e));
-                return classPath + "类InvocationTarget异常";
-            } catch (InstantiationException e) {
-                System.out.println(JSONObject.toJSONString(e));
-                return classPath + "类Instantiation异常";
-            } catch (IllegalAccessException e) {
-                System.out.println(JSONObject.toJSONString(e));
-                return classPath + "类IllegalAccess异常";
-            } catch (NoSuchMethodException e) {
-                System.out.println(JSONObject.toJSONString(e));
-                return classPath + "类NoSuchMethod异常";
             }
         } else {
             return jarPath + "文件不存在";
