@@ -1,4 +1,7 @@
-package cn.apifox.v1.models.api;
+package cn.apifox.v1.models.api.item;
+
+import cn.apifox.v1.models.api.Auth;
+import cn.apifox.v1.models.api.item.Api;
 
 import java.util.List;
 

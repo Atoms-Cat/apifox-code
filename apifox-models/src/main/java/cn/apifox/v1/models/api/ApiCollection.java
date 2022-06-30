@@ -1,5 +1,7 @@
 package cn.apifox.v1.models.api;
 
+import cn.apifox.v1.models.api.item.ApiItem;
+
 import java.util.List;
 
 public class ApiCollection {

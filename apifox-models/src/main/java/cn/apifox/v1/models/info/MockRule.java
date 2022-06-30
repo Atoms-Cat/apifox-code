@@ -7,18 +7,15 @@ import java.util.List;
  */
 public class MockRule {
 
-    /**
-     * todo
-     */
-    private List<String> rules;
+    private List<Rule> rules;
 
     private Boolean enableSystemRule;
 
-    public List<String> getRules() {
+    public List<Rule> getRules() {
         return rules;
     }
 
-    public void setRules(List<String> rules) {
+    public void setRules(List<Rule> rules) {
         this.rules = rules;
     }
 

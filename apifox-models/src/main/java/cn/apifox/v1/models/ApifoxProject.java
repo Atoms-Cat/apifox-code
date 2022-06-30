@@ -28,6 +28,61 @@ public class ApifoxProject {
 
     private List<ApiCollection> apiCollection;
 
+    /**
+     * todo
+     */
+    private List<Object> socketCollection;
+
+    /**
+     * todo
+     */
+    private List<Object> docCollection;
+
+    /**
+     * todo
+     */
+    private List<Object> schemaCollection;
+
+    /**
+     * todo
+     */
+    private List<Object> apiTestCaseCollection;
+
+    /**
+     * todo
+     */
+    private List<Object> apiTestSuiteCollection;
+
+    /**
+     * todo
+     */
+    private List<Object> environments;
+
+    /**
+     * todo
+     */
+    private List<Object> commonScripts;
+
+    /**
+     * todo
+     */
+    private List<Object> databaseConnections;
+
+    /**
+     * todo
+     */
+    private List<Object> globalVariables;
+
+    /**
+     * todo
+     */
+    private List<Object> commonParameters;
+
+    /**
+     * todo
+     */
+    private List<Object> projectSetting;
+
     public String getApifoxProject() {
         return apifoxProject;
     }

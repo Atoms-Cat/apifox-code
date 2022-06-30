@@ -1,4 +1,6 @@
-package cn.apifox.v1.models.api;
+package cn.apifox.v1.models.api.item;
+
+import cn.apifox.v1.models.api.item.ApiContent;
 
 public class Api {
     private String name;
