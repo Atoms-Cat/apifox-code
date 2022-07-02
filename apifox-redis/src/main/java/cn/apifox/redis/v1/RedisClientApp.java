@@ -36,7 +36,7 @@ public class RedisClientApp {
         sendCommandParam.setArgs(SafeEncoder.encodeMany(argList.toArray(new String[0])));
         Object obj = sendCommand(param, sendCommandParam);
         if (obj != null && obj instanceof byte[]) {
-            System.out.println(JSONObject.toJSONString(SafeEncoder.encodeObject(obj)));
+            System.out.print(JSONObject.toJSONString(SafeEncoder.encodeObject(obj)));
         }
     }
 
