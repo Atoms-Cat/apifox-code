@@ -12,6 +12,7 @@
         <module>apifox-models</module>
         <module>apifox-annotations</module>
         <module>apifox-jar-execute</module>
+        <module>apifox-redis</module>
     </modules>
 
     <properties>
