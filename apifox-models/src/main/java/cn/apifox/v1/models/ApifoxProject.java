@@ -3,6 +3,7 @@ package cn.apifox.v1.models;
 import cn.apifox.v1.models.api.ApiCollection;
 import cn.apifox.v1.models.info.Info;
 import cn.apifox.v1.models.response.ResponseCollection;
+import cn.apifox.v1.models.socket.SocketCollection;
 
 import java.util.List;
 
@@ -25,13 +26,9 @@ public class ApifoxProject {
      */
     private List<ResponseCollection> responseCollection;
 
-
     private List<ApiCollection> apiCollection;
 
-    /**
-     * todo
-     */
-    private List<Object> socketCollection;
+    private List<SocketCollection> socketCollection;
 
     /**
      * todo
