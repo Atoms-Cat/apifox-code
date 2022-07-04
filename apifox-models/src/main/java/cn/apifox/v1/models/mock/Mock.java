@@ -1,4 +1,4 @@
-package cn.apifox.v1.models.response;
+package cn.apifox.v1.models.mock;
 
 public class Mock {
     private String mock;

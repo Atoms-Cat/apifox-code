@@ -9,7 +9,7 @@ import java.util.List;
 public class ApiCollection {
     private String name;
 
-    private Long parentId;
+    private Integer parentId;
 
     private String serverId;
 
@@ -31,11 +31,11 @@ public class ApiCollection {
         this.name = name;
     }
 
-    public Long getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
