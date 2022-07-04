@@ -1,6 +1,9 @@
 package cn.apifox.v1.models.api.item;
 
+import cn.apifox.v1.models.api.CustomApiField;
 import cn.apifox.v1.models.api.parameter.*;
+import cn.apifox.v1.models.api.setting.AdvancedSetting;
+import cn.apifox.v1.models.mock.ApiMock;
 
 import java.util.List;
 
@@ -42,4 +45,11 @@ public class ApiContent {
      * todo
      */
     private List<Case> cases;
+
+    private List<ApiMock> mocks;
+
+    private CustomApiField customApiFields;
+
+    private AdvancedSetting advancedSettings;
+
 }
