@@ -4,6 +4,10 @@ public class RequestParameter {
 
     private String name;
 
+    private String value;
+
+    private Boolean enable;
+
     private Boolean required;
 
     private String description;

@@ -1,9 +1,6 @@
 package cn.apifox.v1.models.api.item;
 
-import cn.apifox.v1.models.api.parameter.CommonParameter;
-import cn.apifox.v1.models.api.parameter.Parameter;
-import cn.apifox.v1.models.api.parameter.RequestBody;
-import cn.apifox.v1.models.api.parameter.Response;
+import cn.apifox.v1.models.api.parameter.*;
 
 import java.util.List;
 
@@ -44,5 +41,5 @@ public class ApiContent {
     /**
      * todo
      */
-    private List<Object> cases;
+    private List<Case> cases;
 }

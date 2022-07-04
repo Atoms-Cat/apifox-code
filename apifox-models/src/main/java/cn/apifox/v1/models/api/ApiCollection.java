@@ -1,6 +1,8 @@
 package cn.apifox.v1.models.api;
 
 import cn.apifox.v1.models.api.item.ApiItem;
+import cn.apifox.v1.models.api.processors.PostProcessor;
+import cn.apifox.v1.models.api.processors.PreProcessor;
 
 import java.util.List;
 
@@ -13,9 +15,9 @@ public class ApiCollection {
 
     private String description;
 
-    private List<Object> preProcessors;
+    private List<PreProcessor> preProcessors;
 
-    private List<Object> postProcessors;
+    private List<PostProcessor> postProcessors;
 
     private Auth auth;
 
@@ -53,19 +55,19 @@ public class ApiCollection {
         this.description = description;
     }
 
-    public List<Object> getPreProcessors() {
+    public List<PreProcessor> getPreProcessors() {
         return preProcessors;
     }
 
-    public void setPreProcessors(List<Object> preProcessors) {
+    public void setPreProcessors(List<PreProcessor> preProcessors) {
         this.preProcessors = preProcessors;
     }
 
-    public List<Object> getPostProcessors() {
+    public List<PostProcessor> getPostProcessors() {
         return postProcessors;
     }
 
-    public void setPostProcessors(List<Object> postProcessors) {
+    public void setPostProcessors(List<PostProcessor> postProcessors) {
         this.postProcessors = postProcessors;
     }
 
