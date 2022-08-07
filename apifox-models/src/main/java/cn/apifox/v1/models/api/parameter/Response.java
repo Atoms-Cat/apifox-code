@@ -1,7 +1,7 @@
 package cn.apifox.v1.models.api.parameter;
 
 
-import cn.apifox.v1.models.response.JsonSchema;
+import cn.apifox.v1.models.schema.JsonSchema;
 
 public class Response {
     private String id;

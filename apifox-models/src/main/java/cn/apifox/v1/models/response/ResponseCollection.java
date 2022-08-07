@@ -1,5 +1,7 @@
 package cn.apifox.v1.models.response;
 
+import cn.apifox.v1.models.schema.JsonSchema;
+
 /**
  * TODO
  *

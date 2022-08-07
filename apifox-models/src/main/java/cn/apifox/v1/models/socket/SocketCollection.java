@@ -5,7 +5,7 @@ import java.util.List;
 public class SocketCollection {
     private String name;
 
-    private List<Object> children;
+    private List<SockeChildren> children;
 
     private List<Object> items;
 
